@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HabitForge | Level Up Your Life</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+ --bg:#070611; --panel:#100d20; --panel2:#17112b;
+ --purple:#a855f7; --pink:#d946ef; --blue:#7474ff;
+ --text:#f5efff; --muted:#aaa0c4; --line:#30234d;
+ --green:#34e89e; --gold:#ffc857;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:radial-gradient(ellipse at 75% 0%,#241044 0%,#0b0818 42%,#05040b 100%);
+ color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif;min-height:100vh
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+.sidebar{padding:25px 16px;border-left:1px solid var(--line);background:#080611eF;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.logo{font-size:27px;font-weight:900;color:#c084fc;text-align:center;text-shadow:0 0 22px #a855f7}
+.logo small{display:block;font-size:10px;letter-spacing:2px;color:var(--muted);font-weight:500}
+.nav{margin-top:42px;display:grid;gap:10px}
+.nav button{border:1px solid transparent;background:transparent;color:var(--muted);text-align:right;padding:13px;border-radius:13px}
+.nav button.active,.nav button:hover{background:linear-gradient(100deg,#7c3aed55,#c026d355);border-color:#a855f7;color:white;box-shadow:0 0 20px #9333ea33}
+.sidequote{margin-top:auto;border:1px solid var(--line);padding:15px;border-radius:15px;color:#d8b4fe;font-size:12px;text-align:center}
+main{padding:25px;max-width:1500px;width:100%;margin:auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}
+.top h1{font-size:25px;margin:0}
+.date{color:var(--muted);font-size:13px}
+.hero{border:1px solid #55318b;border-radius:23px;padding:25px;min-height:155px;display:flex;align-items:center;justify-content:space-between;gap:20px;overflow:hidden;position:relative;background:linear-gradient(110deg,#190d31,#28104a,#110c24)}
+.hero:after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,#a855f7aa,#6726c244 45%,transparent 70%);left:9%;top:-70px;filter:blur(4px)}
+.hero h2{font-size:27px;margin:0 0 5px;position:relative;z-index:1}
+.hero p{margin:0;color:#d4c5ee;position:relative;z-index:1}
+.hero-art{font-size:75px;filter:drop-shadow(0 0 20px #a855f7);position:relative;z-index:1}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:17px 0}
+.stat,.card{background:linear-gradient(145deg,#17112aee,#0d0a19f5);border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:0 8px 35px #0004}
+.stat{display:flex;align-items:center;gap:12px}
+.stat .ico{font-size:29px}
+.stat small{color:var(--muted)}
+.stat strong{display:block;font-size:23px}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+.card{margin-bottom:14px}
+.card h3{margin:0 0 15px;font-size:16px}
+.chart{height:205px;display:flex;align-items:end;gap:10px;padding:15px 5px 0;border-bottom:1px solid var(--line)}
+.month{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%;gap:7px;min-width:0}
+.bar{width:min(35px,80%);min-height:3px;border-radius:8px 8px 2px 2px;background:linear-gradient(#e879f9,#7c3aed);box-shadow:0 0 15px #a855f766;position:relative}
+.bar span{position:absolute;top:-23px;left:50%;transform:translateX(-50%);font-size:10px}
+.month label{font-size:10px;color:var(--muted)}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;text-align:center}
+.calendar div{padding:9px 2px;border:1px solid var(--line);border-radius:10px;font-size:12px}
+.calendar .weekday{color:#c084fc;border:0;font-weight:bold}
+.calendar .marked{background:#7c3aed55;border-color:#a855f7}
+.form{display:grid;gap:10px}
+input[type=text],select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:#0a0814;color:white;outline:none}
+input:focus,select:focus{border-color:var(--purple)}
+.days{display:flex;flex-wrap:wrap;gap:6px}
+.day{display:flex;align-items:center;gap:4px;background:#0a0814;border:1px solid var(--line);border-radius:9px;padding:7px;font-size:11px}
+.day input{accent-color:var(--purple)}
+.btn{border:0;border-radius:11px;padding:11px 16px;background:linear-gradient(100deg,#9333ea,#c026d3);color:white;font-weight:800;box-shadow:0 0 18px #9333ea44}
+.btn:hover{filter:brightness(1.15)}
+.task{display:flex;align-items:center;gap:9px;padding:12px 5px;border-bottom:1px solid #2a2040}
+.task:last-child{border:0}
+.task input{accent-color:#a855f7;width:18px;height:18px}
+.task-info{flex:1;min-width:0}
+.task-info b{display:block;font-size:13px}
+.task-info small{color:var(--muted);font-size:11px}
+.task.done b{text-decoration:line-through;color:#8d82a8}
+.del{background:transparent;color:#a99abd;border:0;font-size:20px}
+.progress{height:9px;background:#29203b;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress div{height:100%;background:linear-gradient(90deg,#9333ea,#e879f9);border-radius:20px;transition:.3s}
+.achievement{display:flex;align-items:center;gap:12px;padding:10px;border-bottom:1px solid var(--line)}
+.achievement span{font-size:25px}
+.achievement small{color:var(--muted)}
+.hidden{display:none!important}
+footer{text-align:center;color:#6f6287;font-size:11px;padding:20px}
+@media(max-width:850px){
+ .app{grid-template-columns:1fr}.sidebar{height:auto;position:relative;padding:12px;border-left:0;border-bottom:1px solid var(--line)}
+ .logo{font-size:21px}.nav{display:flex;overflow:auto;margin-top:10px;gap:5px}.nav button{white-space:nowrap;padding:9px;font-size:12px}
+ .sidequote{display:none}main{padding:14px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}
+ .hero h2{font-size:21px}.hero-art{font-size:52px}
+} 
+#nutrition input[type=number],#nutrition input[type=text],#nutrition select{background:#0a0814;color:white;border:1px solid var(--line);padding:11px;border-radius:10px;width:100%;min-width:0}
+#nutrition .form{grid-template-columns:1fr 1fr}
+#nutrition .form button{grid-column:1/-1}
+#nutrition .mealrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+#nutrition .mealrow:last-child{border:0}
+#nutrition .mealrow small{display:block;color:var(--muted)}
+#nutrition .mini{padding:5px 9px;font-size:11px}
+#nutrition .chart{gap:5px}
+#nutrition .month{min-width:0}
+#nutrition .bar{width:min(25px,80%)}
+
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="logo">♛ HabitForge<small>BUILD YOUR BETTER SELF</small></div>
+ <div class="nav">
+  <button class="active" onclick="showPage('home',this)">🏠 داشبورد</button>
+  <button onclick="showPage('habits',this)">⚡ عادت‌ها و کلاس‌ها</button>
+  <button onclick="showPage('stats',this)">📊 آمار و پیشرفت</button>
+  <button onclick="showPage('awards',this)">🏆 دستاوردها</button>
+  <button onclick="showPage('nutrition',this)">🍎 Nutrition Mode</button>
+ </div>
+ <div class="sidequote">👑<br>با تلاش مداوم، نسخه بهتر خودت شو!</div>
+</aside>
+
+<main>
+<div class="top"><div><h1 id="pageTitle">داشبورد</h1><div class="date" id="today"></div></div><div>💜 <b>HABITFORGE</b></div></div>
+
+<section id="home">
+ <div class="hero">
+  <div><h2>سلام قهرمان! ⚡</h2><p>آماده‌ای امروز یک قدم به هدفت نزدیک‌تر بشی؟</p></div>
+  <div class="hero-art">🌙</div>
+ </div>
+ <div class="stats">
+  <div class="stat"><span class="ico">⚡</span><div><small>کل XP</small><strong id="xp">0</strong></div></div>
+  <div class="stat"><span class="ico">🔥</span><div><small>استریک فعلی</small><strong id="streak">0 روز</strong></div></div>
+  <div class="stat"><span class="ico">⭐</span><div><small>سطح فعلی</small><strong id="level">Lv.1</strong></div></div>
+  <div class="stat"><span class="ico">🏆</span><div><small>دستاوردها</small><strong id="achCount">0</strong></div></div>
+ </div>
+ <div class="grid">
+  <div>
+   <div class="card"><h3>📈 نمودار پیشرفت ماهانه</h3><div class="chart" id="chart"></div></div>
+   <div class="card"><h3>📅 تقویم ماهانه</h3><div class="calendar" id="calendar"></div></div>
+  </div>
+  <div>
+   <div class="card"><h3>🎯 پیشرفت امروز</h3><b id="percent">۰٪</b><div class="progress"><div id="progressBar"></div></div><small id="progressText" style="color:var(--muted)">هنوز شروع نکردی؛ بزن بریم!</small></div>
+   <div class="card"><h3>⚡ عادت‌های امروز</h3><div id="taskList"></div></div>
+  </div>
+ </div>
+</section>
+
+<section id="habits" class="hidden">
+ <div class="grid">
+  <div class="card">
+   <h3>➕ افزودن عادت یا کلاس جدید</h3>
+   <div class="form">
+    <input id="taskName" type="text" placeholder="مثلاً کلاس ریاضی یا مطالعه">
+    <select id="category"><option>درس</option><option>ورزش</option><option>سلامتی</option><option>شخصی</option><option>مهارت</option><option>تفریح</option></select>
+    <select id="frequency" onchange="frequencyChanged()"><option value="daily">هر روز</option><option value="weekly">روزهای مشخص هفته</option></select>
+    <div id="dayChoices" class="days hidden">
+     <label class="day"><input type="checkbox" value="6">شنبه</label>
+     <label class="day"><input type="checkbox" value="0">یکشنبه</label>
+     <label class="day"><input type="checkbox" value="1">دوشنبه</label>
+     <label class="day"><input type="checkbox" value="2">سه‌شنبه</label>
+     <label class="day"><input type="checkbox" value="3">چهارشنبه</label>
+     <label class="day"><input type="checkbox" value="4">پنجشنبه</label>
+     <label class="day"><input type="checkbox" value="5">جمعه</label>
+    </div>
+    <div class="days">
+     <button class="day" onclick="preset([6,1,3])" type="button">شنبه، دوشنبه، چهارشنبه</button>
+     <button class="day" onclick="preset([0,2])" type="button">یکشنبه، سه‌شنبه</button>
+    </div>
+    <button class="btn" onclick="addTask()">ساخت عادت جدید 🚀</button>
+   </div>
+  </div>
+  <div class="card"><h3>📌 همه عادت‌ها</h3><div id="allTasks"></div></div>
+ </div>
+</section>
+
+<section id="stats" class="hidden">
+ <div class="card"><h3>📈 عملکرد شش ماه اخیر</h3><div class="chart" id="chart2"></div><p id="totalText" style="color:var(--muted)"></p></div>
+ <div class="card"><h3>🔥 آمار کلی</h3><div class="stats"><div class="stat"><div><small>XP کل</small><strong id="xp2">0</strong></div></div><div class="stat"><div><small>سطح</small><strong id="level2">1</strong></div></div><div class="stat"><div><small>استریک</small><strong id="streak2">0</strong></div></div><div class="stat"><div><small>تسک‌های انجام‌شده</small><strong id="doneTotal">0</strong></div></div></div></div>
+</section>
+
+<section id="awards" class="hidden">
+ <div class="card"><h3>🏆 دستاوردهای تو</h3><div id="achievements"></div></div>
+</section>
+
+<section id="nutrition" class="hidden">
+ <div class="hero">
+  <div><h2>Nutrition Mode 💜</h2><p>ثبت وعده‌ها و آب برای شناخت بهتر عادت‌های غذایی؛ بدون سقف کالری اجباری.</p></div>
+  <div class="hero-art">🥗</div>
+ </div>
+ <div class="stats">
+  <div class="stat"><span class="ico">🍽️</span><div><small>کالری ثبت‌شده امروز</small><strong id="nfCalories">۰</strong></div></div>
+  <div class="stat"><span class="ico">💧</span><div><small>آب مصرفی (لیوان)</small><strong id="nfWater">۰</strong></div></div>
+  <div class="stat"><span class="ico">⚖️</span><div><small>آخرین وزن ثبت‌شده</small><strong id="nfWeight">۸۶ kg</strong></div></div>
+  <div class="stat"><span class="ico">📏</span><div><small>قد پروفایل</small><strong>۱۶۵ cm</strong></div></div>
+ </div>
+ <div class="grid">
+  <div>
+   <div class="card">
+    <h3>➕ ثبت وعده غذایی</h3>
+    <div class="form">
+     <select id="nfMealType"><option>صبحانه</option><option>ناهار</option><option>شام</option><option>میان‌وعده</option></select>
+     <input id="nfFood" type="text" placeholder="نام غذا">
+     <input id="nfFoodCalories" type="number" min="0" placeholder="کالری (اختیاری)">
+     <button class="btn" onclick="nfAddMeal()">ثبت وعده</button>
+    </div>
+   </div>
+   <div class="card"><h3>🍴 وعده‌های امروز</h3><div id="nfMeals"></div></div>
+   <div class="card">
+    <div class="row"><h3>📈 نمودار کالری ثبت‌شده</h3><select id="nfChartRange" onchange="nfRenderChart()" style="width:auto"><option value="7">۷ روز اخیر</option><option value="30">۳۰ روز اخیر</option></select></div>
+    <div class="chart" id="nfChart"></div>
+    <small style="color:var(--muted)">این نمودار فقط مجموع مواردی را نشان می‌دهد که خودت ثبت کرده‌ای.</small>
+   </div>
+  </div>
+  <div>
+   <div class="card">
+    <h3>💧 ثبت آب مصرفی</h3>
+    <p style="color:var(--muted);font-size:12px">هر بار یک لیوان به ثبت امروز اضافه کن.</p>
+    <div class="row"><b id="nfWaterLabel">۰ لیوان</b><div><button class="btn" onclick="nfChangeWater(-1)">−</button> <button class="btn" onclick="nfChangeWater(1)">+ لیوان</button></div></div>
+   </div>
+   <div class="card">
+    <h3>⚖️ ثبت وزن (اختیاری)</h3>
+    <div class="form"><input id="nfWeightInput" type="number" min="1" max="300" step="0.1" placeholder="وزن به کیلوگرم"><button class="btn" onclick="nfAddWeight()">ثبت وزن</button></div>
+    <div id="nfWeightHistory" style="margin-top:12px"></div>
+   </div>
+   <div class="card"><h3>💜 پیام امروز</h3><p id="nfMessage" style="color:var(--muted);margin:0">هر چیزی را که ثبت می‌کنی، به شناخت بهتر عادت‌هایت کمک می‌کند.</p></div>
+  </div>
+ </div>
+</section>
+<footer>HABITFORGE • YOUR LIFE, YOUR LEVEL</footer>
+</main>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const names=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+const key='habitforge-purple-v1';
+let data=JSON.parse(localStorage.getItem(key)||'null')||{
+ tasks:[
+  {id:1,name:'۲۰ دقیقه مطالعه',cat:'درس',freq:'daily',days:[],done:{}},
+  {id:2,name:'۱۵ دقیقه ورزش',cat:'ورزش',freq:'daily',days:[],done:{}}
+ ],xp:0,hist:{}
+};
+function todayKey(){let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function save(){localStorage.setItem(key,JSON.stringify(data));render()}
+function active(t){return t.freq==='daily'||(t.days||[]).includes(new Date().getDay())}
+function frequencyChanged(){$('dayChoices').classList.toggle('hidden',$('frequency').value!=='weekly')}
+function preset(days){$('frequency').value='weekly';frequencyChanged();document.querySelectorAll('#dayChoices input').forEach(x=>x.checked=days.includes(+x.value))}
+function addTask(){
+ let name=$('taskName').value.trim();if(!name){alert('اول اسم عادت رو وارد کن');return}
+ let freq=$('frequency').value,days=[...document.querySelectorAll('#dayChoices input:checked')].map(x=>+x.value);
+ if(freq==='weekly'&&!days.length){alert('روزهای تکرار رو انتخاب کن');return}
+ data.tasks.push({id:Date.now(),name,cat:$('category').value,freq,days,done:{}});
+ $('taskName').value='';save()
+}
+function toggleTask(id,checked){
+ let t=data.tasks.find(x=>x.id===id),k=todayKey();if(!t)return;
+ if(checked&&!t.done[k]){t.done[k]=true;data.xp+=10;data.hist[k]=(data.hist[k]||0)+1}
+ if(!checked&&t.done[k]){delete t.done[k];data.xp=Math.max(0,data.xp-10);data.hist[k]=Math.max(0,(data.hist[k]||0)-1)}
+ save()
+}
+function removeTask(id){if(confirm('این عادت حذف شود؟')){data.tasks=data.tasks.filter(t=>t.id!==id);save()}}
+function months(){let now=new Date(),out=[];for(let i=5;i>=0;i--){let d=new Date(now.getFullYear(),now.getMonth()-i,1),prefix=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');let total=Object.entries(data.hist).reduce((s,[k,v])=>s+(k.startsWith(prefix)?v:0),0);out.push({name:new Intl.DateTimeFormat('fa-IR',{month:'short'}).format(d),total})}return out}
+function chart(id){let m=months(),max=Math.max(1,...m.map(x=>x.total));$(id).innerHTML=m.map(x=>`<div class="month"><div class="bar" style="height:${Math.max(4,x.total/max*135)}px"><span>${x.total}</span></div><label>${x.name}</label></div>`).join('')}
+function streak(){let n=0,d=new Date();for(let i=0;i<365;i++){let x=new Date(d);x.setDate(x.getDate()-i);let k=x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');if(data.hist[k]>0)n++;else if(i>0)break}return n}
+function render(){
+ let k=todayKey(),activeTasks=data.tasks.filter(active),done=activeTasks.filter(t=>t.done[k]).length,p=activeTasks.length?Math.round(done/activeTasks.length*100):0,lv=Math.floor(data.xp/100)+1;
+ $('xp').textContent=data.xp.toLocaleString('fa-IR');$('level').textContent='Lv.'+lv;$('streak').textContent=streak().toLocaleString('fa-IR')+' روز';
+ $('percent').textContent=p.toLocaleString('fa-IR')+'٪';$('progressBar').style.width=p+'%';$('progressText').textContent=done+' از '+activeTasks.length+' تسک انجام شده';
+ $('taskList').innerHTML=activeTasks.map(t=>taskHTML(t,k)).join('')||'امروز تسکی نداری 🎉';
+ $('allTasks').innerHTML=data.tasks.map(t=>taskHTML(t,k,true)).join('')||'هنوز عادتی نساختی.';
+ chart('chart');chart('chart2');
+ $('xp2').textContent=data.xp;$('level2').textContent=lv;$('streak2').textContent=streak();$('doneTotal').textContent=Object.values(data.hist).reduce((a,b)=>a+b,0);
+ $('totalText').textContent='در شش ماه اخیر '+months().reduce((a,b)=>a+b.total,0)+' تسک انجام داده‌ای.';
+ let achievements=[['🚀','اولین قدم',data.xp>=10],['🔥','سه روز استمرار',streak()>=3],['💎','صد XP',data.xp>=100],['👑','رسیدن به سطح پنج',lv>=5],['🏆','پانصد XP',data.xp>=500]];
+ $('achCount').textContent=achievements.filter(x=>x[2]).length;
+ $('achievements').innerHTML=achievements.map(x=>`<div class="achievement"><span>${x[0]}</span><div><b>${x[1]}</b><br><small>${x[2]?'باز شده ✓':'هنوز قفل است 🔒'}</small></div></div>`).join('');
+ calendar();
+}
+function taskHTML(t,k,showDelete=false){
+ let days=t.freq==='daily'?'هر روز':(t.days||[]).sort((a,b)=>a-b).map(x=>names[x]).join('، ');
+ return `<div class="task ${t.done[k]?'done':''}"><input type="checkbox" ${t.done[k]?'checked':''} onchange="toggleTask(${t.id},this.checked)"><div class="task-info"><b>${escapeHTML(t.name)}</b><small>${escapeHTML(t.cat)} • ${days}</small></div><small style="color:#d8a7ff">+۱۰ XP</small>${showDelete?`<button class="del" onclick="removeTask(${t.id})">×</button>`:''}</div>`
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function calendar(){
+ let d=new Date(),year=d.getFullYear(),month=d.getMonth(),first=new Date(year,month,1).getDay(),last=new Date(year,month+1,0).getDate();
+ let cells=names.map(n=>`<div class="weekday">${n.slice(0,2)}</div>`).join('');
+ for(let i=0;i<first;i++)cells+='<div style="opacity:0"></div>';
+ for(let day=1;day<=last;day++){let date=year+'-'+String(month+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');cells+=`<div class="${data.hist[date]?'marked':''}" title="${data.hist[date]||0} تسک">${day.toLocaleString('fa-IR')}${data.hist[date]?' ✦':''}</div>`}
+ $('calendar').innerHTML=cells;
+}
+function showPage(id,btn){
+ ['home','habits','stats','awards','nutrition'].forEach(x=>$(x).classList.toggle('hidden',x!==id));
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+ $('pageTitle').textContent={home:'داشبورد',habits:'عادت‌ها و کلاس‌ها',stats:'آمار و پیشرفت',awards:'دستاوردها',nutrition:'Nutrition Mode'}[id];
+}
+$('today').textContent=new Intl.DateTimeFormat('fa-IR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());
+render();
+</script>
+
+<script>
+// Nutrition Mode — separate storage keys; the original Habit Mode data/logic is untouched.
+const nf$ = id => document.getElementById(id);
+const nfToday = () => { const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+const nfRead = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch(e) { return fallback; } };
+const nfWrite = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+let nfMeals = nfRead('habitforge-nutrition-meals-'+nfToday(), []);
+let nfWater = nfRead('habitforge-nutrition-water-'+nfToday(), 0);
+let nfWeights = nfRead('habitforge-nutrition-weights', [{date:'',value:86,initial:true}]);
+
+function nfAddMeal(){
+ const name=nf$('nfFood').value.trim();
+ if(!name){alert('نام غذا را وارد کن.');return;}
+ const calories=nf$('nfFoodCalories').value;
+ nfMeals.push({id:Date.now(),type:nf$('nfMealType').value,name,calories:calories===''?null:Number(calories)});
+ nfWrite('habitforge-nutrition-meals-'+nfToday(),nfMeals);
+ nf$('nfFood').value='';nf$('nfFoodCalories').value='';nfRender();
+}
+function nfDeleteMeal(id){
+ nfMeals=nfMeals.filter(m=>m.id!==id);
+ nfWrite('habitforge-nutrition-meals-'+nfToday(),nfMeals);nfRender();
+}
+function nfChangeWater(delta){
+ nfWater=Math.max(0,nfWater+delta);
+ nfWrite('habitforge-nutrition-water-'+nfToday(),nfWater);nfRender();
+}
+function nfAddWeight(){
+ const value=Number(nf$('nfWeightInput').value);
+ if(!value||value<1||value>300){alert('یک وزن معتبر وارد کن.');return;}
+ nfWeights.push({date:nfToday(),value});
+ nfWrite('habitforge-nutrition-weights',nfWeights);nf$('nfWeightInput').value='';nfRender();
+}
+function nfRenderChart(){
+ const count=Number(nf$('nfChartRange').value)||7;
+ const days=Array.from({length:count},(_,i)=>{const d=new Date();d.setDate(d.getDate()-(count-1-i));return d;});
+ const values=days.map(d=>{const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');return nfRead('habitforge-nutrition-meals-'+k,[]).reduce((s,m)=>s+(Number(m.calories)||0),0)});
+ const max=Math.max(1,...values);
+ nf$('nfChart').innerHTML=days.map((d,i)=>{const label=count===7?new Intl.DateTimeFormat('fa-IR',{weekday:'short'}).format(d):String(d.getDate()).toLocaleString('fa-IR');return `<div class="month"><div class="bar" style="height:${Math.max(3,values[i]/max*130)}px"><span>${values[i]||''}</span></div><label>${label}</label></div>`}).join('');
+}
+function nfRender(){
+ const total=nfMeals.reduce((s,m)=>s+(Number(m.calories)||0),0);
+ nf$('nfCalories').textContent=total.toLocaleString('fa-IR');
+ nf$('nfWater').textContent=nfWater.toLocaleString('fa-IR');
+ nf$('nfWaterLabel').textContent=nfWater.toLocaleString('fa-IR')+' لیوان';
+ const last=nfWeights.filter(w=>!w.initial).slice(-1)[0];
+ nf$('nfWeight').textContent=(last?last.value:86).toLocaleString('fa-IR')+' kg';
+ const list=nf$('nfMeals');
+ if(!nfMeals.length) list.innerHTML='<div class="empty">هنوز وعده‌ای ثبت نشده.</div>';
+ else list.innerHTML=nfMeals.map(m=>`<div class="mealrow"><div><b>${nfEscape(m.name)}</b><small>${nfEscape(m.type)}</small></div><span>${m.calories===null?'کالری ثبت نشده':Number(m.calories).toLocaleString('fa-IR')+' kcal'}</span><button class="del" onclick="nfDeleteMeal(${m.id})" aria-label="حذف">×</button></div>`).join('');
+ const history=nf$('nfWeightHistory');
+ const entries=nfWeights.filter(w=>!w.initial).slice(-6).reverse();
+ history.innerHTML=entries.length?entries.map(w=>`<div class="mealrow"><span>${new Date(w.date+'T12:00:00').toLocaleDateString('fa-IR')}</span><b>${Number(w.value).toLocaleString('fa-IR')} کیلوگرم</b></div>`).join(''):'<small>وزن اولیه پروفایل: ۸۶ کیلوگرم؛ ثبت‌های بعدی اختیاری‌اند.</small>';
+ nf$('nfMessage').textContent=nfMeals.length>=3?'وعده‌هایی که امروز ثبت کردی قابل مشاهده‌اند؛ عالیه که به شناخت عادت‌هات اهمیت می‌دی.':nfMeals.length?'بخشی از خوراک امروز ثبت شده؛ اگر چیزی جا مونده، می‌تونی اضافه کنی.':'هنوز وعده‌ای ثبت نکردی؛ هر وقت خواستی می‌تونی ثبتش کنی.';
+ nfRenderChart();
+}
+function nfEscape(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+nfRender();
+</script>
+
+</body>
+</html>
